@@ -7,6 +7,7 @@ aliasutil () {
     case $1 in
          replace-alias)
              alias alias='aliasutil add'
+             ;;
          add)
              shift
              alias "$@"
