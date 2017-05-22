@@ -5,13 +5,13 @@ safe-alias () {
         alias_aliased=yes
     fi;
 
-    if [ -z "$alias_aliased" ]; then
+    if [ -n "$alias_aliased" ]; then
        disable -a alias
     fi;
 
     alias "$@"
 
-    if [ -z "$alias_aliased" ]; then
+    if [ -n "$alias_aliased" ]; then
        enable -a alias
     fi;
 }
