@@ -1,20 +1,26 @@
 
-safe-alias () {
-    local alias_aliased
-    if [ -z "$aliases[alias]" ]; then
+with-plain-alias () {
+    local alis_aliased old_alias
+    if [ -n "$aliases[alias]" ]; then
         alias_aliased=yes
+        old_alias=$aliases[alias]
     fi;
 
     if [ -n "$alias_aliased" ]; then
-       disable -a alias
+        unalias alias
     fi;
 
-    alias "$@"
+    "$@"
 
     if [ -n "$alias_aliased" ]; then
-       enable -a alias
+        alias alias=$old_alias
     fi;
 }
+
+safe-alias () {
+    with-plain-alias alias "$@"
+}
+
 
 
 aliasutil () {
@@ -57,9 +63,7 @@ aliasutil () {
              cat "$alias_file"
              ;;
          load)
-             disable -a alias
-             source "$alias_file"
-             enable -a alias
+             with-plain-alias source "$alias_file"
              ;;
          *)
              aliasutil-die "unrecognised operation: $1"
