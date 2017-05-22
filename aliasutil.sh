@@ -1,9 +1,19 @@
 
 safe-alias () {
-    disable -a alias
-    alias alias
+    local alias_aliased
+    if [ -z "$aliases[alias]" ]; then
+        alias_aliased=yes
+    fi;
+
+    if [ -z "$alias_aliased" ]; then
+       disable -a alias
+    fi;
+
     alias "$@"
-    enable -a alias
+
+    if [ -z "$alias_aliased" ]; then
+       enable -a alias
+    fi;
 }
 
 
