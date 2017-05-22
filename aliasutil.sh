@@ -1,6 +1,23 @@
 
+
+unalias-alias () {
+
+    local alias_aliased old_alias
+    if [ -n "$aliases[alias]" ]; then
+        alias_aliased=yes
+        old_alias=$aliases[alias]
+    fi;
+
+    if [ -n "$alias_aliased" ]; then
+        unalias alias
+    fi;
+
+
+}
+
+
 with-plain-alias () {
-    local alis_aliased old_alias
+    local alias_aliased old_alias
     if [ -n "$aliases[alias]" ]; then
         alias_aliased=yes
         old_alias=$aliases[alias]
@@ -15,6 +32,16 @@ with-plain-alias () {
     if [ -n "$alias_aliased" ]; then
         alias alias=$old_alias
     fi;
+}
+
+alias-alias () {
+    unalias-alias
+
+    # This was not working without eval:
+    #    I think aliased things get converted
+    #    into their corresponding commands
+    #    at some time before execution time
+    eval "alias alias='$*'"
 }
 
 safe-alias () {
@@ -32,7 +59,7 @@ aliasutil () {
 
     case $1 in
          replace-alias)
-             safe-alias alias='aliasutil add'
+             alias-alias 'aliasutil add'
              ;;
          add)
              shift
