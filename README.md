@@ -1,37 +1,60 @@
 # aliasutil
 
-Persistent aliases for `zsh` and `bash`. Aliases are reloaded at startup.
+Persistent aliases for `zsh` and `bash` without having to use an editor.
 
-Inspired by [https://unix.stackexchange.com/questions/47341/are-there-any-utilities-to-quickly-add-list-and-remove-command-aliases](stack exchange).
+Inspired by [this stack exchange question](https://unix.stackexchange.com/questions/47341/are-there-any-utilities-to-quickly-add-list-and-remove-command-aliases).
 
 # Installation
 
-Download this git repository and source `aliasutil.sh`.
+Use one of the following:
 
-Alternatively you can use zplug (with zsh)
+
+## 1. Raw installation for bash; or
+
+```
+git clone https://github.com/talwrii/aliasutil ~/aliasutil
+echo source ~/aliasutil/aliasutil.sh >> ~/.bashrc
+```
+
+## 2. Raw installation for zsh; or
+
+```
+git clone https://github.com/talwrii/aliasutil ~/aliasutil
+echo source ~/aliasutil/aliasutil.zsh >> ~/.zshrc
+```
+
+## 3. zplug installation for zsh
 
 ```
     source /usr/share/zplug/init.zsh
     zplug talwrii/aliasutil
     zplug install
     zplug load
+    echo "zplug load" >> ~/.zshrc
 ```
-
 
 # Usage
 
-Add the following to your `bashrc` or `zshrc`
+Run (or add to your init file (`~/.zshrc` or `~/.bashrc`)).
 
 ```
 source aliasutil.sh
 aliasutil load
 ```
 
-Thereafter calls like `aliasutil add hello='echo hello'` will create an alias that is reloaded in every shell.
+Thereafter you can run
 
-If you are brave you can transparently make alias persist using `aliasutil replace-alias`.
+`aliasutil add hello='echo hello'`
 
-Other commands
+to create a snippet that is saved and restored.
+
+## Transparently persisted aliases
+
+If you are brave, you can transparently make `alias` by calling `aliasutil replace-alias`.
+
+This will replace `alias` with `aliasutil add`
+
+## Other commands
 
 - `aliasutil remove` -- delete an alias
 - `aliasutil list` -- list all persisted aliases
@@ -41,6 +64,5 @@ Other commands
 # Prior work and influences
 
 - A stack overflow post discussing this issue https://unix.stackexchange.com/questions/47341/are-there-any-utilities-to-quickly-add-list-and-remove-command-aliases
-- `zshnip` (by author)
 
-
+- `zshnip` (by author) provides snippets rather than aliases.
